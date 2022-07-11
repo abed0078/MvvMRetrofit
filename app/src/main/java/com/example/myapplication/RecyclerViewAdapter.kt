@@ -10,8 +10,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.RecyclerViewItemBinding
 import com.example.myapplication.models.UserList
+import com.example.myapplication.ui.MainFragment
 
-class RecyclerViewAdapter(private val context: Context, private val contacts: List<UserList.User>,/*val clickListener: OnItemClickListener*/) :
+class RecyclerViewAdapter(private val context: MainFragment, private val contacts: List<UserList.User>/*val clickListener: OnItemClickListener*/) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     private val TAG = "ContactAdapter"

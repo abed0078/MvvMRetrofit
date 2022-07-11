@@ -1,14 +1,17 @@
 package com.example.myapplication
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.models.UserList
 import com.example.myapplication.network.Service
-import com.google.firebase.firestore.auth.User
+import com.example.myapplication.ui.MainFragment
+import com.example.myapplication.ui.MainViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,17 +20,26 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 private const val BaseUrl =
-    "https://jsonplaceholder.typicode.com"
+    "https://jsonplaceholder.typicode.com/"
 private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var binding: ActivityMainBinding
+
+
     lateinit var userList: ArrayList<UserList>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<MainFragment>(R.id.nav_host_fragment)
+            }
+        }
+      /*  binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
-        setContentView(view)
-        getMethod()
+        setContentView(view)*/
+
+       // getMethod()
       /*  val bottomSheetFragment=BottomSheetFragment()
         binding.createButton.setOnClickListener {
             bottomSheetFragment.show(supportFragmentManager,"BottomSheetDialog")
@@ -45,14 +57,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun showData(body: List<UserList.User>) {
+    /*private fun showData(body: List<UserList.User>) {
         binding.recyclerView.apply {
             //val listOfPosts = mutableListOf<PostDetail>()
             val adapter = RecyclerViewAdapter(this@MainActivity, body)
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
         }
-    }
+    }*/
 
     /* fun getMethod() {
          val retrofit = Retrofit.Builder()
@@ -75,6 +87,7 @@ class MainActivity : AppCompatActivity() {
 
              })
      }*/
+    //1
     fun getMethod() {
         val retrofit = Retrofit.Builder()
             .baseUrl(BaseUrl)
@@ -92,7 +105,7 @@ class MainActivity : AppCompatActivity() {
                 ) {
 
                     if (response.isSuccessful) {
-                        showData(response.body()!!)
+                       // showData(response.body()!!)
                     }
                 }
 
